@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  # db:
+  #   image: postgres
+  #   volumes:
+  #     - ./data/db:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  django-api:
+    build:
+      context: ./docker-app/django_docker/
+      dockerfile: Dockerfile
+    container_name: django
+    command: python manage.py runserver 0.0.0.0:8010
+    volumes:
+      - ./docker-app/:/opt
+    ports:
+      - "8010:8010"
+    # environment:
+    #   - POSTGRES_NAME=postgres
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=postgres
+    # depends_on:
+    #   - db
+  react-ui:
+    container_name: react-ui
+    build:
+      context: ./docker-app/frontend/
+      dockerfile: Dockerfile
+    volumes:
+      - ./docker-app/frontend/:/opt
+      - '/opt/node_modules'
+    ports:
+      - 3000:3000
+    # environment:
+    #   - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true
