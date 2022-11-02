@@ -12,7 +12,7 @@ services:
     build:
       context: ./docker-app/django_docker/
       dockerfile: Dockerfile
-    container_name: django
+    container_name: django-api-docker
     command: python manage.py runserver 0.0.0.0:8010
     volumes:
       - ./docker-app/:/opt
@@ -25,7 +25,7 @@ services:
     # depends_on:
     #   - db
   react-ui:
-    container_name: react-ui
+    container_name: react-ui-docker
     build:
       context: ./docker-app/frontend/
       dockerfile: Dockerfile
